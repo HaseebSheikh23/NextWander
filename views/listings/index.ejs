@@ -1,0 +1,169 @@
+
+
+<% layout("/layouts/boilerplate")%>
+
+<style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter, .tax-switch {
+    text-decoration: none; /* Applies to .filter only, but no harm here */
+    color: black; /* Sets text color to black for .filter */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7; /* Applies to .filter only */
+  }
+
+  .filter:hover, .tax-switch:hover {
+    opacity: 1; /* Full opacity on hover */
+    color: black; /* Keeps text color black on hover for .filter */
+  }
+
+  .filter div, .filter p, .tax-switch div, .tax-switch p {
+    margin: 0; /* Removes default margins */
+  }
+
+  .filter i {
+    font-size: 24px; /* Adjust icon size as needed */
+  }
+
+  .filter p {
+    font-weight: bold; /* Makes the text bold */
+  }
+  
+  .tax-info {
+    display: none;
+  }
+
+  .tax-switch {
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex; /* This ensures it behaves like the .filter elements */
+    flex-direction: row; /* Aligns the switch and label horizontally */
+    justify-content: center; /* Centers the content */
+    align-items: center; /* Aligns items vertically */
+  }
+
+  /* Additional style to reduce the top margin for the tax-switch to align it better with filters */
+  .tax-switch {
+    margin-top: 1rem; /* Adjusts the top margin to better align with filters */
+  }
+</style>
+<div id="filters">
+  <a href="/listings?category=Trending" class="filter">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>Trending</p>
+  </a>
+
+  <a href="/listings?category=Rooms" class="filter">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+  </a>
+
+  <a href="/listings?category=Iconic%20Cities" class="filter">
+    <div><i class="fa-solid fa-mountain-city"></i></div>
+    <p>Iconic Cities</p>
+  </a>
+
+  <a href="/listings?category=Castles" class="filter">
+    <div><i class="fa-brands fa-fort-awesome"></i></div>
+    <p>Castles</p>
+  </a>
+
+  <a href="/listings?category=Mountain%20Views" class="filter">
+    <div><i class="fa-solid fa-mountain-sun"></i></div>
+    <p>Mountain Views</p>
+  </a>
+
+  <a href="/listings?category=Camping" class="filter">
+    <div><i class="fa-solid fa-tent"></i></div>
+    <p>Camping</p>
+  </a>
+
+  <a href="/listings?category=Amazing%20Nature" class="filter">
+    <div><i class="fa-solid fa-person-swimming"></i></div>
+    <p>Amazing Nature</p>
+  </a>
+
+  <a href="/listings?category=Farms" class="filter">
+    <div><i class="fa-solid fa-tractor"></i></div>
+    <p>Farms</p>
+  </a>
+
+  <a href="/listings?category=Arctic" class="filter">
+    <div><i class="fa-solid fa-snowflake"></i></div>
+    <p>Arctic</p>
+  </a>
+
+  <a href="/listings?category=Boats" class="filter">
+    <div><i class="fa-solid fa-ship"></i></div>
+    <p>Boats</p>
+  </a>
+  <div class="tax-switch">
+        <div class="form-check-reverse form-switch">
+          <input 
+              class="form-check-input" 
+              type="checkbox" 
+              role="switch" 
+              id="flexSwitchCheckDefault">
+          <label 
+              class="form-check-label" 
+              for="flexSwitchCheckDefault">Display Taxes
+          </label>
+        </div>
+      </div>
+</div>
+ 
+
+
+<div class="row row-cols-lg-3 row-cols-md-3 mt-3 row-cols-sm-1">
+  <% for(let listing of allListings) { %>
+
+    <a href="/listings/<%= listing._id%>" class="listing-link"> 
+    <div class="card col listing-card">
+      <img 
+        class="card-img-top" 
+        src="<%= listing.image.url %>" 
+        alt="listing_image" 
+        style="height: 20rem" />
+
+      <div class="card-img-overlay"></div>
+
+      <div class="card-body">
+        <p class="card-text">
+           <b><%= listing.title %></b> <br>
+           PKR <%= listing.price  %> /Night
+           <i class="tax-info">&nbsp;+18% GST</i>
+        </p>
+      </div>
+
+    </div>
+    </a>
+  <% } %>
+
+</div>
+
+<script>
+  let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  taxSwitch.addEventListener("click", () => {
+    let taxInfo = document.getElementsByClassName("tax-info");
+
+    for ( info of taxInfo) {
+
+      if(info.style.display != "inline") {
+        info.style.display = "inline";
+      } else {
+        info.style.display = "none";
+      }     
+    }
+  });
+</script>
+
+
